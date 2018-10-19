@@ -13,17 +13,20 @@ NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); // NewPing setup of pins and
 Servo leftW;
 Servo rightW;
 
+int STOP_VAL_R = 90;
+int STOP_VAL_L = 90;
+
 void setup() {
   Serial.begin(115200); // Open serial monitor at 115200 baud to see ping results.
   leftW.attach(5);
-  leftW.write(90);
+  leftW.write(STOP_VAL_L);
   rightW.attach(9);
-  rightW.write(90);
+  rightW.write(STOP_VAL_R);
 }
 
 void stop() {
-  leftW.write(90);
-  rightW.write(90);
+  leftW.write(STOP_VAL_L);
+  rightW.write(STOP_VAL_R);
 }
 
 void forward() {
