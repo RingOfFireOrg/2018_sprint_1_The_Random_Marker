@@ -7,7 +7,7 @@
 
 #define TRIGGER_PIN  12  // Arduino pin tied to trigger pin on the ultrasonic sensor.
 #define ECHO_PIN     11  // Arduino pin tied to echo pin on the ultrasonic sensor.
-#define MAX_DISTANCE 200 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
+#define MAX_DISTANCE 300 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
  
 NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
 Servo leftW;
@@ -15,6 +15,7 @@ Servo rightW;
 
 int STOP_VAL_R = 90;
 int STOP_VAL_L = 90;
+int Counter = 0;
 
 void setup() {
   Serial.begin(115200); // Open serial monitor at 115200 baud to see ping results.
@@ -22,6 +23,7 @@ void setup() {
   leftW.write(STOP_VAL_L);
   rightW.attach(9);
   rightW.write(STOP_VAL_R);
+  pinMode(4, OUTPUT);
 }
 
 void stop() {
@@ -40,19 +42,38 @@ void backup() {
 }
 
 void loop() {
-  delay(50);                      // Wait 50ms between pings (about 20 pings/sec). 29ms should be the shortest delay between pings.
-  unsigned int uS = sonar.ping(); // Send ping, get ping time in microseconds (uS).
-  Serial.print("Ping: ");
-  int distance = uS/US_ROUNDTRIP_CM;
-  Serial.print(distance); // Convert ping time to distance in cm and print result (0 = outside set distance range)
-  Serial.println("cm");
-  if (distance < 5) {
-    stop();
-    delay(1000);
-    backup();
-    delay(1000);
-  } else {
+  if (Counter < 1) {
     forward();
+    delay(1700);
+    stop();
+    digitalWrite(4, HIGH);
+    delay(500);
+    digitalWrite(4, LOW);
+    forward();
+    delay(1200);
+    stop();
+    digitalWrite(4, HIGH);
+    delay(500);
+    digitalWrite(4, LOW);
+    forward();
+    delay(900);
+    stop();
+    digitalWrite(4, HIGH);
+    delay(500);
+    digitalWrite(4, LOW);
+    forward();
+    delay(1100);
+    stop();
+    digitalWrite(4, HIGH);
+    delay(500);
+    digitalWrite(4, LOW);
+    forward();
+    delay(700);
+    stop();
+    digitalWrite(4, HIGH);
+    delay(500);
+    digitalWrite(4, LOW);
+    Counter = Counter + 2;
   }
-
+    
 }
