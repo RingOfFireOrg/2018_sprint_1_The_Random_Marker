@@ -44,7 +44,7 @@ void backup() {
 void loop() {
   if (Counter < 1) {
     forward();
-    delay(1700);
+    delay(1800);
     stop();
     digitalWrite(4, HIGH);
     delay(500);
